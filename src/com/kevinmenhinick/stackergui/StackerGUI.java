@@ -3,23 +3,15 @@ package com.kevinmenhinick.stackergui;
 import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Toolkit;
-import javax.swing.*;
 
 public class StackerGUI {
-    
-    /*
-    TODO: Make retro game machine theme
-    */
     
     public static void main(String[] args) {
 	setupUI();
     }
     
     public static void setupUI() {
-	StackerWindow window = new StackerWindow("HelloWorldSwing");
-	JLabel label = new JLabel("Hello World");
-	
-	window.getMainWrapper().add(label);
+	StackerWindow window = new StackerWindow("Stacker! by Kevin");
 	window.setVisible(true);
     }
     
