@@ -29,7 +29,7 @@ public class BackgroundPanel extends JPanel {
     
     public BackgroundPanel(String[] imgFilenames) {
 	this(imgFilenames[0]);
-	for(int i = 0; i < imgFilenames.length; i++) {
+	for(int i = 1; i < imgFilenames.length; i++) {
 	    try {
 		Image temp = ImageIO.read(getClass().getResource(StackerGUI.IMG_PATH + imgFilenames[i]));
 		bg.add(temp);
@@ -43,6 +43,7 @@ public class BackgroundPanel extends JPanel {
 	if(i < bg.size() && i >= 0) {
 	    selectedBG = bg.get(i);
 	}
+	this.repaint();
     }
     
     @Override

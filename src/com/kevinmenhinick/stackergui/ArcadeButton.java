@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -15,6 +17,7 @@ public class ArcadeButton extends JButton {
     
     private Image onImage;
     private Image offImage;
+    private Listener listener;
     
     public ArcadeButton(String offImageName, String onImageName) {
 	try {
@@ -25,12 +28,41 @@ public class ArcadeButton extends JButton {
 	    super.setFocusPainted(false);
 	    super.setBorder(BorderFactory.createEmptyBorder());
 	    super.setContentAreaFilled(false);
-	    
 	    super.setIcon(new ImageIcon(offImage));
 	    super.setPressedIcon(new ImageIcon(onImage));
+	    
 	} catch (IOException e) {
 	    System.err.println("image not found");
 	}
+    }
+    
+    public Listener getListener() {
+	return this.listener;
+    }
+    
+    public void setListener(Listener listener) {
+	super.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		getListener().onRelease();
+	    }
+	    
+	});
+	
+	super.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mousePressed(MouseEvent e) {
+		getListener().onPress();
+	    }
+	    
+	});
+	
+	this.listener = listener;
+    }
+    
+    public interface Listener {
+	public void onPress();
+	public void onRelease();
     }
     
 }

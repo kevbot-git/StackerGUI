@@ -7,7 +7,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +36,8 @@ public class StackerWindow extends JFrame {
 	super.setLocation(getCenterPoint(this));
 	
 	setupComponents();
+	
+	setupListeners();
 	
 	super.add(this.getMainWrapper());
     }
@@ -76,6 +77,35 @@ public class StackerWindow extends JFrame {
 	controls.add(btnQuit, 192, 24);
     }
 
+    private void setupListeners() {
+	btnSelect.setListener(new ArcadeButton.Listener() {
+	    @Override
+	    public void onPress() {
+		System.out.println("Select pressed!");
+	    }
+
+	    @Override
+	    public void onRelease() {
+		System.out.println("Select released!");
+	    }
+	});
+    }
+    
+    public void startup() {
+	pause(200);
+	title.setBGIndex(1);
+	pause(200);
+	title.setBGIndex(0);
+	pause(100);
+	title.setBGIndex(1);
+	pause(1000);
+	title.setBGIndex(0);
+	pause(100);
+	title.setBGIndex(1);
+	pause(100);
+	screen.setBGIndex(1);
+    }
+    
     public void quit() {
 	System.out.println("Goodbye!");
 	
@@ -97,5 +127,13 @@ public class StackerWindow extends JFrame {
 	int diffY = (int) frame.getHeight() / 2;
 	
 	return new Point(x - diffX, y - diffY);
+    }
+    
+    public static void pause(int millis) {
+	try {
+	    Thread.sleep(millis);
+	} catch(InterruptedException e) {
+	    //
+	}
     }
 }
