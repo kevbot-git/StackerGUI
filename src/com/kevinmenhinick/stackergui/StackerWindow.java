@@ -2,10 +2,17 @@ package com.kevinmenhinick.stackergui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class StackerWindow extends JFrame {
     private Dimension size = new Dimension(320, 832);
@@ -27,7 +34,7 @@ public class StackerWindow extends JFrame {
 	super.setSize(size);
 	super.setResizable(false);
 	super.setUndecorated(true);
-	super.setLocation(StackerGUI.getCenterPoint(this));
+	super.setLocation(getCenterPoint(this));
 	
 	setupComponents();
 	
@@ -44,10 +51,21 @@ public class StackerWindow extends JFrame {
 	controls = new BackgroundPanel("img/button_panel.png");
 	btnSelect = new ArcadeButton("img/select_btn_dim.png", "img/select_btn_lit.png");
 	btnUp = new ArcadeButton("img/up_arrow_dim.png", "img/up_arrow_lit.png");
-	btnDown = new ArcadeButton("img/up_arrow_dim.png", "img/up_arrow_lit.png");
+	btnDown = new ArcadeButton("img/down_arrow_dim.png", "img/down_arrow_lit.png");
 	btnQuit = new ArcadeButton("img/quit_btn_dim.png", "img/quit_btn_lit.png");
 	
-	System.out.println(this.getMainWrapper().getBounds().height);
+	try {
+	    super.setIconImage(ImageIO.read(new File("img/icon.png")));
+	} catch (IOException ex) {
+	    Logger.getLogger(StackerWindow.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+	btnQuit.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		quit();
+	    }
+	});
 	
 	this.add(title, 32, 32);
 	this.add(screen, 32, 160);
@@ -56,19 +74,28 @@ public class StackerWindow extends JFrame {
 	controls.add(btnUp, 18, 24);
 	controls.add(btnDown, 18, 52);
 	controls.add(btnQuit, 192, 24);
-	
-	btnSelect.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-		
-	    }
-	});
     }
 
+    public void quit() {
+	System.out.println("Goodbye!");
+	
+	System.exit(0);
+    }
+    
     // add component directly into wrapper
     public Component add(Component comp, int x, int y) {
 	comp.setBounds(x, y, comp.getWidth(), comp.getHeight());
 	return this.getMainWrapper().add(comp);
     }
     
-    
+    public static Point getCenterPoint(Frame frame) {
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int x = (int) tk.getScreenSize().getWidth() / 2;
+	int y = (int) tk.getScreenSize().getHeight() / 2;
+	
+	int diffX = (int) frame.getWidth() / 2;
+	int diffY = (int) frame.getHeight() / 2;
+	
+	return new Point(x - diffX, y - diffY);
+    }
 }

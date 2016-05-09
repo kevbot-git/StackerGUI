@@ -15,9 +15,8 @@ public class ArcadeButton extends JButton {
     
     private Image onImage;
     private Image offImage;
-    private ActionListener actionListener;
     
-    public ArcadeButton(String onImageName, String offImageName) {
+    public ArcadeButton(String offImageName, String onImageName) {
 	try {
 	    onImage = ImageIO.read(new File(onImageName));
 	    offImage = ImageIO.read(new File(offImageName));
@@ -28,14 +27,7 @@ public class ArcadeButton extends JButton {
 	    super.setContentAreaFilled(false);
 	    
 	    super.setIcon(new ImageIcon(offImage));
-	    
-	    this.actionListener = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    //setIcon();
-		}
-	    };
-	    
-	    super.addActionListener(actionListener);
+	    super.setPressedIcon(new ImageIcon(onImage));
 	} catch (IOException e) {
 	    System.err.println("image not found");
 	}
