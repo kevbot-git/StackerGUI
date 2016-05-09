@@ -19,7 +19,7 @@ public class BackgroundPanel extends JPanel {
 	super.setLayout(null);
 	bg = new ArrayList<Image>();
 	try {
-	    selectedBG = ImageIO.read(new File(imgFilename));
+	    selectedBG = ImageIO.read(getClass().getResource(StackerGUI.IMG_PATH + imgFilename));
 	    bg.add(selectedBG);
 	    super.setSize(selectedBG.getWidth(this), selectedBG.getHeight(this));
 	} catch (IOException e) {
@@ -31,7 +31,7 @@ public class BackgroundPanel extends JPanel {
 	this(imgFilenames[0]);
 	for(int i = 0; i < imgFilenames.length; i++) {
 	    try {
-		Image temp = ImageIO.read(new File(imgFilenames[i]));
+		Image temp = ImageIO.read(getClass().getResource(StackerGUI.IMG_PATH + imgFilenames[i]));
 		bg.add(temp);
 	    } catch (IOException e) {
 		System.err.println("'" + imgFilenames[i] + "' not found");

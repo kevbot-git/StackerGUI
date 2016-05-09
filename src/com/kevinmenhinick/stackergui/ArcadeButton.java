@@ -18,8 +18,8 @@ public class ArcadeButton extends JButton {
     
     public ArcadeButton(String offImageName, String onImageName) {
 	try {
-	    onImage = ImageIO.read(new File(onImageName));
-	    offImage = ImageIO.read(new File(offImageName));
+	    onImage = ImageIO.read(getClass().getResource(StackerGUI.IMG_PATH + onImageName));
+	    offImage = ImageIO.read(getClass().getResource(StackerGUI.IMG_PATH + offImageName));
 	    
 	    super.setSize(offImage.getWidth(this), offImage.getHeight(this));
 	    super.setFocusPainted(false);

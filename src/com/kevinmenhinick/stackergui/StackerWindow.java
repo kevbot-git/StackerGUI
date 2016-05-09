@@ -28,7 +28,7 @@ public class StackerWindow extends JFrame {
 
     public StackerWindow(String title) {
 	super(title);
-	this.mainWrapper = new BackgroundPanel("img/frame.png");
+	this.mainWrapper = new BackgroundPanel("frame.png");
 	
 	super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	super.setSize(size);
@@ -46,16 +46,16 @@ public class StackerWindow extends JFrame {
     }
 
     private void setupComponents() {
-	screen = new BackgroundPanel(new String[] {"img/screen_dim.png", "img/screen_lit.png"});
-	title = new BackgroundPanel(new String[] {"img/title_dim.png", "img/title_lit.png"});
-	controls = new BackgroundPanel("img/button_panel.png");
-	btnSelect = new ArcadeButton("img/select_btn_dim.png", "img/select_btn_lit.png");
-	btnUp = new ArcadeButton("img/up_arrow_dim.png", "img/up_arrow_lit.png");
-	btnDown = new ArcadeButton("img/down_arrow_dim.png", "img/down_arrow_lit.png");
-	btnQuit = new ArcadeButton("img/quit_btn_dim.png", "img/quit_btn_lit.png");
+	screen = new BackgroundPanel(new String[] {"screen_dim.png", "screen_lit.png"});
+	title = new BackgroundPanel(new String[] {"title_dim.png", "title_lit.png"});
+	controls = new BackgroundPanel("button_panel.png");
+	btnSelect = new ArcadeButton("select_btn_dim.png", "select_btn_lit.png");
+	btnUp = new ArcadeButton("up_arrow_dim.png", "up_arrow_lit.png");
+	btnDown = new ArcadeButton("down_arrow_dim.png", "down_arrow_lit.png");
+	btnQuit = new ArcadeButton("quit_btn_dim.png", "quit_btn_lit.png");
 	
 	try {
-	    super.setIconImage(ImageIO.read(new File("img/icon.png")));
+	    super.setIconImage(ImageIO.read(getClass().getResource(StackerGUI.IMG_PATH + "icon.png")));
 	} catch (IOException ex) {
 	    Logger.getLogger(StackerWindow.class.getName()).log(Level.SEVERE, null, ex);
 	}
