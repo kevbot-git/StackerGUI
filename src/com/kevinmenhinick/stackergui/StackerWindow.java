@@ -93,22 +93,10 @@ public class StackerWindow extends JFrame {
     }
     
     public void startup() {
-	
-	pause(200);
-	title.setBGIndex(1);
-	pause(200);
-	title.setBGIndex(0);
-	pause(100);
-	title.setBGIndex(1);
-	pause(1000);
-	title.setBGIndex(0);
-	pause(100);
-	title.setBGIndex(1);
-	pause(100);
-	screen.setBGIndex(1);
-	
 	Thread gtThread = new Thread(new GlitchTask(title));
 	gtThread.start();
+	pause(1000);
+	screen.setBGIndex(1);
     }
     
     public void quit() {

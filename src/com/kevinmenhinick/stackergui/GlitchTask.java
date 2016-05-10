@@ -12,15 +12,23 @@ public class GlitchTask implements Runnable {
 	this.toGlitch = toGlitch;
     }
 
+    public void on() {
+	StackerGUI.getLightOn().play();
+	toGlitch.setBGIndex(0);
+    }
+    
+    public void off() {
+	StackerGUI.getLightOff().play();
+	toGlitch.setBGIndex(1);
+    }
+    
     @Override
     public void run() {
 	try {
 	    while(true) {
-		StackerGUI.getLightOff().play();
-		toGlitch.setBGIndex(1);
+		off();
 		Thread.sleep(Math.abs(rand.nextInt()) % 5000 + 500);
-		StackerGUI.getLightOn().play();
-		toGlitch.setBGIndex(0);
+		on();
 		Thread.sleep(Math.abs(rand.nextInt()) % 300 + 30);
 	    }
 	} catch(InterruptedException e) {
