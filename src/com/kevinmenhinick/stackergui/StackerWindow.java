@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -92,6 +93,7 @@ public class StackerWindow extends JFrame {
     }
     
     public void startup() {
+	
 	pause(200);
 	title.setBGIndex(1);
 	pause(200);
@@ -104,6 +106,9 @@ public class StackerWindow extends JFrame {
 	title.setBGIndex(1);
 	pause(100);
 	screen.setBGIndex(1);
+	
+	Thread gtThread = new Thread(new GlitchTask(title));
+	gtThread.start();
     }
     
     public void quit() {
