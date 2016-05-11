@@ -13,12 +13,12 @@ public class GlitchTask implements Runnable {
     }
 
     public void on() {
-	StackerGUI.getLightOn().play();
+	StackerGUI.getLightOnSound().play();
 	toGlitch.setBGIndex(0);
     }
     
     public void off() {
-	StackerGUI.getLightOff().play();
+	StackerGUI.getLightOffSound().play();
 	toGlitch.setBGIndex(1);
     }
     

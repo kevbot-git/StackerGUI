@@ -44,7 +44,7 @@ public class ArcadeButton extends JButton {
 	super.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		getListener().onRelease();
+		releaseButton();
 	    }
 	    
 	});
@@ -52,12 +52,22 @@ public class ArcadeButton extends JButton {
 	super.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mousePressed(MouseEvent e) {
-		getListener().onPress();
+		pressButton();
 	    }
 	    
 	});
 	
 	this.listener = listener;
+    }
+    
+    public void pressButton() {
+	StackerGUI.getKeyDownSound().play();
+	getListener().onPress();
+    }
+    
+    public void releaseButton() {
+	StackerGUI.getKeyUpSound().play();
+	getListener().onRelease();
     }
     
     public interface Listener {

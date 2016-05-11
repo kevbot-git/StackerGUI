@@ -7,6 +7,8 @@ public class StackerGUI {
     
     private static StackerSound lightOn;
     private static StackerSound lightOff;
+    private static StackerSound keyDown;
+    private static StackerSound keyUp;
     
     public static void main(String[] args) {
 	loadSounds();
@@ -20,13 +22,23 @@ public class StackerGUI {
     private static void loadSounds() {
 	lightOn = new StackerSound("light_on.wav");
 	lightOff = new StackerSound("light_off.wav");
+	keyDown = new StackerSound("key_down.wav");
+	keyUp = new StackerSound("key_up.wav");
     }
 
-    public static StackerSound getLightOn() {
+    public static StackerSound getLightOnSound() {
 	return lightOn;
     }
 
-    public static StackerSound getLightOff() {
+    public static StackerSound getLightOffSound() {
 	return lightOff;
+    }
+
+    public static StackerSound getKeyDownSound() {
+	return keyDown;
+    }
+
+    public static StackerSound getKeyUpSound() {
+	return keyUp;
     }
 }

@@ -62,13 +62,6 @@ public class StackerWindow extends JFrame {
 	    Logger.getLogger(StackerWindow.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	
-	btnQuit.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		quit();
-	    }
-	});
-	
 	this.add(title, 32, 32);
 	this.add(screen, 32, 160);
 	this.add(controls, 32, 704);
@@ -79,6 +72,30 @@ public class StackerWindow extends JFrame {
     }
 
     private void setupListeners() {
+	btnUp.setListener(new ArcadeButton.Listener() {
+	    @Override
+	    public void onPress() {
+		//
+	    }
+
+	    @Override
+	    public void onRelease() {
+		//
+	    }
+	});
+	
+	btnDown.setListener(new ArcadeButton.Listener() {
+	    @Override
+	    public void onPress() {
+		//
+	    }
+
+	    @Override
+	    public void onRelease() {
+		//
+	    }
+	});
+	
 	btnSelect.setListener(new ArcadeButton.Listener() {
 	    @Override
 	    public void onPress() {
@@ -88,6 +105,18 @@ public class StackerWindow extends JFrame {
 	    @Override
 	    public void onRelease() {
 		System.out.println("Select released!");
+	    }
+	});
+	
+	btnQuit.setListener(new ArcadeButton.Listener() {
+	    @Override
+	    public void onPress() {
+		//
+	    }
+
+	    @Override
+	    public void onRelease() {
+		quit();
 	    }
 	});
     }
