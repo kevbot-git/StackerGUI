@@ -120,7 +120,7 @@ public class StackerWindow extends JFrame implements Runnable {
 	    @Override
 	    public void onPress() {
 		// Not called by button press
-		System.out.println(pixels.getTotalHeight());
+		
 	    }
 
 	    @Override
@@ -195,7 +195,6 @@ public class StackerWindow extends JFrame implements Runnable {
     public synchronized void trap() {
 	PixelStack temp = pixels;
 	Boolean[] rem = temp.remainder();
-	System.out.println("Remainder? " + temp.hasRemainder());
 	if(temp.hasRemainder()) {
 	    pixels.moveRemainder(rem);
 	    tickInterval -= (tickInterval / 10);
@@ -203,7 +202,7 @@ public class StackerWindow extends JFrame implements Runnable {
 	    
 	    
 	} else {
-	    System.out.println("Complete miss");
+	    System.out.println("Complete miss. Scores:");
 	    db.save(new Score(playerName, pixels.getTotalHeight()));
 	    for(Score s: db.getScores()) {
 		System.out.println(s.toString());
