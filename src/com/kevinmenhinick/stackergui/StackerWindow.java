@@ -1,7 +1,10 @@
 package com.kevinmenhinick.stackergui;
 
+import java.awt.Canvas;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FocusTraversalPolicy;
 import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -14,20 +17,32 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class StackerWindow extends JFrame {
+public class StackerWindow extends JFrame implements Runnable {
+    
+    public static int START_INTERVAL = 300;
+    
+    public PixelStack pixels;
+    private Thread updateThread;
+    
     private Dimension size = new Dimension(320, 832);
     
     private BackgroundPanel mainWrapper;
     private BackgroundPanel title;
-    private BackgroundPanel screen;
     private BackgroundPanel controls;
     private ArcadeButton btnSelect;
     private ArcadeButton btnUp;
     private ArcadeButton btnDown;
     private ArcadeButton btnQuit;
+    private StackerCanvas screenCanvas;
+    
+    private boolean running;
+    private int tickInterval;
 
-    public StackerWindow(String title) {
+    public StackerWindow(String title, PixelStack pixelStack) {
 	super(title);
+	
+	pixels = pixelStack;
+	
 	this.mainWrapper = new BackgroundPanel("frame.png");
 	
 	super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +51,9 @@ public class StackerWindow extends JFrame {
 	super.setUndecorated(true);
 	super.setLocation(getCenterPoint(this));
 	
-	setupComponents();
+	this.tickInterval = START_INTERVAL;
+	
+	setupComponents(pixelStack.getWidth(), pixelStack.getMaxHeight());
 	
 	setupListeners();
 	
@@ -46,15 +63,15 @@ public class StackerWindow extends JFrame {
     public final BackgroundPanel getMainWrapper() {
 	return mainWrapper;
     }
-
-    private void setupComponents() {
-	screen = new BackgroundPanel(new String[] {"screen_dim.png", "screen_lit.png"});
+    
+    private void setupComponents(int screenXPixels, int screenYPixels) {
 	title = new BackgroundPanel(new String[] {"title_dim.png", "title_lit.png"});
 	controls = new BackgroundPanel("button_panel.png");
 	btnSelect = new ArcadeButton("select_btn_dim.png", "select_btn_lit.png");
 	btnUp = new ArcadeButton("up_arrow_dim.png", "up_arrow_lit.png");
 	btnDown = new ArcadeButton("down_arrow_dim.png", "down_arrow_lit.png");
 	btnQuit = new ArcadeButton("quit_btn_dim.png", "quit_btn_lit.png");
+	screenCanvas = new StackerCanvas("screen_dim.png", "pixel.png", screenXPixels, screenYPixels);
 	
 	try {
 	    super.setIconImage(ImageIO.read(getClass().getResource(StackerGUI.IMG_PATH + "icon.png")));
@@ -63,7 +80,7 @@ public class StackerWindow extends JFrame {
 	}
 	
 	this.add(title, 32, 32);
-	this.add(screen, 32, 160);
+	this.add(screenCanvas, 32, 160);
 	this.add(controls, 32, 704);
 	controls.add(btnSelect, 80, 24);
 	controls.add(btnUp, 18, 24);
@@ -99,12 +116,15 @@ public class StackerWindow extends JFrame {
 	btnSelect.setListener(new ArcadeButton.Listener() {
 	    @Override
 	    public void onPress() {
-		System.out.println("Select pressed!");
+		// Not called by button press
+		System.out.println(pixels.getTotalHeight());
 	    }
 
 	    @Override
 	    public void onRelease() {
-		System.out.println("Select released!");
+		if(isRunning()) {
+		    trap();
+		}
 	    }
 	});
 	
@@ -119,13 +139,74 @@ public class StackerWindow extends JFrame {
 		quit();
 	    }
 	});
+	
+	super.setFocusTraversalPolicy(new FocusTraversalPolicy() {
+	    @Override
+	    public Component getComponentAfter(Container aContainer, Component aComponent) {
+		return btnSelect;
+	    }
+
+	    @Override
+	    public Component getComponentBefore(Container aContainer, Component aComponent) {
+		return btnSelect;
+	    }
+
+	    @Override
+	    public Component getFirstComponent(Container aContainer) {
+		return btnSelect;
+	    }
+
+	    @Override
+	    public Component getLastComponent(Container aContainer) {
+		return btnSelect;
+	    }
+
+	    @Override
+	    public Component getDefaultComponent(Container aContainer) {
+		return btnSelect;
+	    }
+	    
+	});
     }
     
     public void startup() {
+	pixels = new PixelStack(pixels);
+	
 	Thread gtThread = new Thread(new GlitchTask(title));
 	gtThread.start();
-	pause(1000);
-	screen.setBGIndex(1);
+	
+	pixels.push(pixels.startRow(3));
+	screenCanvas.render(pixels);
+	
+	setRunning(true);
+	updateThread = new Thread(this);
+	updateThread.start();
+    }
+    
+    public void update() {
+	pixels.nextOscTick();
+	screenCanvas.render(pixels);
+    }
+    
+    public synchronized void trap() {
+	PixelStack temp = pixels;
+	Boolean[] rem = temp.remainder();
+	System.out.println("Remainder? " + temp.hasRemainder()                  );
+	if(temp.hasRemainder()) {
+	    pixels.moveRemainder(rem);
+	    tickInterval -= (tickInterval / 10);
+	    pause(1000);
+	    //screenCanvas.render(pixels);
+	    
+	} else {
+	    System.out.println("Complete miss");
+	    setRunning(false);
+	    try {
+		updateThread.join();
+	    } catch (InterruptedException ex) {
+		System.out.println("Fail");
+	    }
+	}
     }
     
     public void quit() {
@@ -156,6 +237,22 @@ public class StackerWindow extends JFrame {
 	    Thread.sleep(millis);
 	} catch(InterruptedException e) {
 	    //
+	}
+    }
+    
+    public boolean isRunning() {
+	return running;
+    }
+    
+    public void setRunning(boolean running) {
+	this.running = running;
+    }
+
+    @Override
+    public void run() {   
+	while(isRunning()) {
+	    pause(tickInterval);
+	    update();
 	}
     }
 }
