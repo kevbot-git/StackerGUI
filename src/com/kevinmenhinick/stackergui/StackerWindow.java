@@ -51,8 +51,6 @@ public class StackerWindow extends JFrame implements Runnable {
 	super.setUndecorated(true);
 	super.setLocation(getCenterPoint(this));
 	
-	this.tickInterval = START_INTERVAL;
-	
 	setupComponents(pixelStack.getWidth(), pixelStack.getMaxHeight());
 	
 	setupListeners();
@@ -170,6 +168,7 @@ public class StackerWindow extends JFrame implements Runnable {
     }
     
     public void startup() {
+	tickInterval = START_INTERVAL;
 	pixels = new PixelStack(pixels);
 	
 	Thread gtThread = new Thread(new GlitchTask(title));
