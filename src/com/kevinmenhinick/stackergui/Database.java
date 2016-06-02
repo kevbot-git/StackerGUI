@@ -2,10 +2,12 @@ package com.kevinmenhinick.stackergui;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,20 +29,44 @@ public class Database {
     
     public void save(Score score) {
 	if(conn != null) {
+	    Statement state = null;
 	    try {
-		Statement state = conn.createStatement();
+		state = conn.createStatement();
 		
-		state.executeUpdate("INSERT INTO " + SCORE_TABLE + " VALUES " + //"(CURRENT_TIMESTAMP, 11, 'KEV')");
+		state.executeUpdate("INSERT INTO " + SCORE_TABLE + " VALUES " +
 			"('" + score.getName() + "', " + score.getLevel() + ", CURRENT_TIMESTAMP)");
+		
+		state.close();
 	    } catch (SQLException ex) {
 		Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
     }
     
-    public Score[] getScores() {
-	Score[] scores = new Score[2];
-	return scores;
+    public ArrayList<Score> getScores() {
+	
+	if(conn != null) {
+	    try {
+		Statement state = conn.createStatement();
+		
+		ResultSet res = state.executeQuery("SELECT * FROM " + SCORE_TABLE + " ORDER BY score, player, tstamp");
+		
+		ArrayList<Score> temp = new ArrayList();
+		
+		while(res.next()) {
+		    String name = res.getString("player");
+		    int level = res.getInt("score");
+		    Timestamp time = res.getTimestamp("tstamp");
+		    temp.add(new Score(name, level, time));
+		}
+		state.close();
+		return temp;
+	    } catch (SQLException ex) {
+		Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	}
+	
+	return null;
     }
     
     public void disconnect() {

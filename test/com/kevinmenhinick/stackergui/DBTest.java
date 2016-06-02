@@ -1,5 +1,7 @@
 package com.kevinmenhinick.stackergui;
 
+import java.util.ArrayList;
+
 public class DBTest {
 
     
@@ -12,6 +14,12 @@ public class DBTest {
 	Database d = new Database();
 	
 	d.save(new Score("KEV", 11));
+	
+	ArrayList<Score> scores = d.getScores();
+	
+	for(Score s : scores) {
+	    System.out.println(s.toString());
+	}
 	
 	d.disconnect();
     }

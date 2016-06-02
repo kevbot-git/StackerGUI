@@ -1,6 +1,12 @@
 package com.kevinmenhinick.stackergui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class StackerGUI {
     
@@ -16,20 +22,33 @@ public class StackerGUI {
     private static StackerSound keyUp;
     
     private static PixelStack pixels;
+    private static String player;
     
     public static void main(String[] args) {
+	loadSounds();
+	
 	Scanner scan = new Scanner(System.in);
 	
-	loadSounds();
+	System.out.print("Enter name: ");
+	setName(scan.nextLine());
 	
 	pixels = new PixelStack(X_PIXELS, Y_PIXELS);
 	
-	StackerWindow machine = new StackerWindow("Stacker! by Kevin", pixels);
+	StackerWindow machine = new StackerWindow("Stacker! by Kevin", pixels, player);
 	machine.setVisible(true);
+	
 	
 	do {
 	    machine.startup();
-	} while(scan.nextLine().equals("y"));
+	} while(scan.nextLine().isEmpty());
+    }
+    
+    private static boolean askAgain() {
+	return true;
+    }
+    
+    private static void setName(String name) {
+	player = name;
     }
     
     private static void loadSounds() {

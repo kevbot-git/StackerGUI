@@ -1,6 +1,7 @@
 package com.kevinmenhinick.stackergui;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Score {
@@ -10,12 +11,16 @@ public class Score {
     private Timestamp date;
 
     public Score(String name, int level) {
-	this(name, null, level);
+	this(name, level, null);
     }
-    public Score(String name, Timestamp timestamp, int level) {
+    public Score(String name, int level, Timestamp timestamp) {
 	this.name = name.toUpperCase().substring(0, 3);
 	this.level = level;
 	date = timestamp;
+    }
+    
+    public String toString() {
+	return ("Name: " + getName() + "\nScore:" + getLevel() + "\nTime:" + dateString());
     }
 
     public String getName() {
@@ -33,8 +38,13 @@ public class Score {
     public void setLevel(int level) {
 	this.level = level;
     }
+    
+    public String dateString() {
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+	return sdf.format(date);
+    }
 
-    public Date getDate() {
+    public Timestamp getDate() {
 	return date;
     }
 

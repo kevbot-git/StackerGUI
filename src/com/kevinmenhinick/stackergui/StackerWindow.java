@@ -37,10 +37,15 @@ public class StackerWindow extends JFrame implements Runnable {
     
     private boolean running;
     private int tickInterval;
+    private String playerName;
+    private Database db;
 
-    public StackerWindow(String title, PixelStack pixelStack) {
+    public StackerWindow(String title, PixelStack pixelStack, String playerName) {
 	super(title);
 	
+	db = new Database();
+	
+	this.playerName = playerName;
 	pixels = pixelStack;
 	
 	this.mainWrapper = new BackgroundPanel("frame.png");
@@ -190,15 +195,19 @@ public class StackerWindow extends JFrame implements Runnable {
     public synchronized void trap() {
 	PixelStack temp = pixels;
 	Boolean[] rem = temp.remainder();
-	System.out.println("Remainder? " + temp.hasRemainder()                  );
+	System.out.println("Remainder? " + temp.hasRemainder());
 	if(temp.hasRemainder()) {
 	    pixels.moveRemainder(rem);
 	    tickInterval -= (tickInterval / 10);
 	    pause(1000);
-	    //screenCanvas.render(pixels);
+	    
 	    
 	} else {
 	    System.out.println("Complete miss");
+	    db.save(new Score(playerName, pixels.getTotalHeight()));
+	    for(Score s: db.getScores()) {
+		System.out.println(s.toString());
+	    }
 	    setRunning(false);
 	    try {
 		updateThread.join();
