@@ -87,12 +87,4 @@ public class Database {
 	    return null;
 	}
     }
-    
-    public void printInfo() {
-	try {
-	    System.out.println(conn.getMetaData().getDatabaseProductName() + " v" + conn.getMetaData().getDriverVersion());
-	} catch (SQLException ex) {
-	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-	}
-    }
 }
