@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Score {
+public class Score implements Comparable {
 
     private String name;
     private int level;
@@ -23,6 +23,23 @@ public class Score {
 	return ("Name: " + getName() + "\nScore:" + getLevel() + "\nTime:" + dateString());
     }
 
+    @Override
+    public int compareTo(Object o) {
+        if(o instanceof Score) {
+            Score other = ((Score) o);
+            if(this.getLevel() != other.getLevel()) {
+                return (new Integer(this.getLevel())).compareTo(other.getLevel());
+            }
+            else if(!this.getName().equals(other.getName())) {
+                return this.getName().compareTo(other.getName());
+            }
+            else if(!this.getDate().equals(other.getDate())) {
+                return this.getDate().compareTo(other.getDate());
+            }
+        }
+        return 0;
+    }
+    
     public String getName() {
 	return name;
     }

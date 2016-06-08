@@ -15,16 +15,16 @@ import java.util.logging.Logger;
 
 public class Database {
     
-    public static String URL = "jdbc:derby://localhost:1527/stackerscores";
+    public static String URL = "jdbc:derby://localhost:1527/";
+    public static String DB = "stackerscores";
     public static String USER = "stacker";
     public static String PASSWORD = "stacker";
-    public static String SCORE_TABLE = "score";
+    public static String SCORE_TABLE = "scores";
 
     private Connection conn;
     
     public Database() {
 	conn = connect();
-	System.out.println(conn != null);
     }
     
     public void save(Score score) {
@@ -81,7 +81,7 @@ public class Database {
     
     private Connection connect() {
 	try {
-	    return DriverManager.getConnection(URL, USER, PASSWORD);
+	    return DriverManager.getConnection(URL + DB, USER, PASSWORD);
 	} catch (SQLException ex) {
 	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
 	    return null;
