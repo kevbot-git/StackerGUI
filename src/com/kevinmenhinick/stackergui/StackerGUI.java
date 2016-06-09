@@ -1,12 +1,6 @@
 package com.kevinmenhinick.stackergui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Scanner;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.util.ArrayList;
 
 public class StackerGUI {
     
@@ -24,24 +18,25 @@ public class StackerGUI {
     private static PixelStack pixels;
     private static String player;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 	loadSounds();
 	
-	Scanner scan = new Scanner(System.in);
-	
-	System.out.print("Enter name: ");
-	setName(scan.nextLine());
+        final ArrayList<String> answerHolder = new ArrayList(); // Will only store one answer
+        NameInputWindow niw = new NameInputWindow("Enter Name:", answerHolder);
+        synchronized(answerHolder) {
+            while(answerHolder.isEmpty()) {
+                answerHolder.wait();
+            }
+        }
+	setName(answerHolder.get(0));
 	
 	pixels = new PixelStack(X_PIXELS, Y_PIXELS);
 	
 	StackerWindow machine = new StackerWindow("Stacker! by Kevin", pixels, player);
         machine.setAutoRequestFocus(true);
 	machine.setVisible(true);
-        machine.setAlwaysOnTop(true);
 	
-	do {
-	    machine.startup();
-	} while(scan.nextLine().isEmpty());
+	machine.startup();
     }
     
     private static void setName(String name) {
