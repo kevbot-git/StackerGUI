@@ -83,8 +83,10 @@ public class Database {
 	try {
 	    return DriverManager.getConnection(URL + DB, USER, PASSWORD);
 	} catch (SQLException ex) {
-	    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-	    return null;
+	    //Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Connection failed. Please make sure the local DB is running! Go to Services > Java DB: Start Server.");
+            System.exit(1);
+            return null;
 	}
     }
 }

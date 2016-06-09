@@ -119,15 +119,14 @@ public class StackerWindow extends JFrame implements Runnable {
 	btnSelect.setListener(new ArcadeButton.Listener() {
 	    @Override
 	    public void onPress() {
-		// Not called by button press
-		
+		if(isRunning()) {
+		    trap();
+		}
 	    }
 
 	    @Override
 	    public void onRelease() {
-		if(isRunning()) {
-		    trap();
-		}
+		//
 	    }
 	});
 	
@@ -141,34 +140,6 @@ public class StackerWindow extends JFrame implements Runnable {
 	    public void onRelease() {
 		quit();
 	    }
-	});
-	
-	super.setFocusTraversalPolicy(new FocusTraversalPolicy() {
-	    @Override
-	    public Component getComponentAfter(Container aContainer, Component aComponent) {
-		return btnSelect;
-	    }
-
-	    @Override
-	    public Component getComponentBefore(Container aContainer, Component aComponent) {
-		return btnSelect;
-	    }
-
-	    @Override
-	    public Component getFirstComponent(Container aContainer) {
-		return btnSelect;
-	    }
-
-	    @Override
-	    public Component getLastComponent(Container aContainer) {
-		return btnSelect;
-	    }
-
-	    @Override
-	    public Component getDefaultComponent(Container aContainer) {
-		return btnSelect;
-	    }
-	    
 	});
     }
     

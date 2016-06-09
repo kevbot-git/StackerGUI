@@ -35,16 +35,13 @@ public class StackerGUI {
 	pixels = new PixelStack(X_PIXELS, Y_PIXELS);
 	
 	StackerWindow machine = new StackerWindow("Stacker! by Kevin", pixels, player);
+        machine.setAutoRequestFocus(true);
 	machine.setVisible(true);
-	
+        machine.setAlwaysOnTop(true);
 	
 	do {
 	    machine.startup();
 	} while(scan.nextLine().isEmpty());
-    }
-    
-    private static boolean askAgain() {
-	return true;
     }
     
     private static void setName(String name) {

@@ -1,24 +1,7 @@
-Wed Jun 08 13:39:46 NZST 2016 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
+Thu Jun 09 14:30:03 NZST 2016 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Wed Jun 08 14:00:24 NZST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0155-2daa-5722-ffffaf474aab 
-on database directory C:\Users\kamen\Documents\Nerdy\Java Projects\StackerGUI\db\stackerscores with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
-Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_91/db/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_91-b14
-user.dir=C:\Program Files\Java\jdk1.8.0_91\db
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
-derby.system.home=C:\Users\kamen\Documents\Nerdy\Java Projects\StackerGUI\db
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Jun 08 14:00:25 NZST 2016:
-Shutting down instance a816c00e-0155-2daa-5722-ffffaf474aab on database directory C:\Users\kamen\Documents\Nerdy\Java Projects\StackerGUI\db\stackerscores with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
-Wed Jun 08 14:00:25 NZST 2016 Thread[DRDAConnThread_3,5,main] (DATABASE = stackerscores), (DRDAID = {2}), Database 'stackerscores' shutdown.
-----------------------------------------------------------------
-Wed Jun 08 14:01:46 NZST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a65c80ac-0155-2daa-5722-ffffaf474aab 
+Thu Jun 09 14:30:10 NZST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0155-32fe-bd65-ffffaf474aab 
 on database directory C:\Users\kamen\Documents\Nerdy\Java Projects\StackerGUI\db\stackerscores with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
 Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_91/db/lib/derby.jar
 java.vendor=Oracle Corporation
