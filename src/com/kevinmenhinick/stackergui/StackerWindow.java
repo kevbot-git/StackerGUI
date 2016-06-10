@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,10 +174,12 @@ public class StackerWindow extends JFrame implements Runnable {
 	    
 	    
 	} else {
-	    System.out.println("Complete miss. Scores:");
 	    db.save(new Score(playerName, pixels.getTotalHeight()));
+            String scoreString = "POS #\tNAME\tSCORE\tDATE\n--------------------";
+            int pos = 0;
 	    for(Score s: db.getScores()) {
-		System.out.println(s.toString());
+                pos++;
+		scoreString += ("\n" + pos + ".\t" + s.getName() + "\t" + s.getLevel() + "\t" + s.dateString());
 	    }
 	    setRunning(false);
 	    try {
@@ -184,6 +187,11 @@ public class StackerWindow extends JFrame implements Runnable {
 	    } catch (InterruptedException ex) {
 		System.out.println("Fail");
 	    }
+            
+            ScoreWindow sw = new ScoreWindow(this, scoreString);
+            sw.setVisible(true);
+            
+            //startup();
 	}
     }
     

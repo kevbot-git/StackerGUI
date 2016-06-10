@@ -11,14 +11,16 @@ public class Score implements Comparable {
     private Timestamp date;
 
     public Score(String name, int level) {
-	this(name, level, null);
+	this(name, level, new Timestamp(new Date().getTime()));
     }
     public Score(String name, int level, Timestamp timestamp) {
-	this.name = name.toUpperCase().substring(0, 3);
+	this.name = name.toUpperCase();
+        if(this.name.length() > 3) this.name = this.name.substring(0, 3);
 	this.level = level;
 	date = timestamp;
     }
     
+    @Override
     public String toString() {
 	return ("Name: " + getName() + "\nScore:" + getLevel() + "\nTime:" + dateString());
     }
@@ -27,14 +29,19 @@ public class Score implements Comparable {
     public int compareTo(Object o) {
         if(o instanceof Score) {
             Score other = ((Score) o);
-            if(this.getLevel() != other.getLevel()) {
-                return (new Integer(this.getLevel())).compareTo(other.getLevel());
+            if(this.getDate() != null && other.getDate() != null) {
+                if(this.getLevel() != other.getLevel()) {
+                    return (new Integer(this.getLevel())).compareTo(other.getLevel());
+                }
+                else if(!this.getDate().equals(other.getDate())) {
+                    return this.getDate().compareTo(other.getDate());
+                }
+                else if(!this.getName().equals(other.getName())) {
+                    return this.getName().compareTo(other.getName());
+                }
             }
-            else if(!this.getName().equals(other.getName())) {
-                return this.getName().compareTo(other.getName());
-            }
-            else if(!this.getDate().equals(other.getDate())) {
-                return this.getDate().compareTo(other.getDate());
+            else {
+                //
             }
         }
         return 0;

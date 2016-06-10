@@ -1,7 +1,7 @@
-Thu Jun 09 14:30:03 NZST 2016 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
+Fri Jun 10 11:20:11 NZST 2016 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Thu Jun 09 14:30:10 NZST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0155-32fe-bd65-ffffaf474aab 
+Fri Jun 10 11:22:07 NZST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0155-3777-436f-ffffaf474aab 
 on database directory C:\Users\kamen\Documents\Nerdy\Java Projects\StackerGUI\db\stackerscores with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
 Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_91/db/lib/derby.jar
 java.vendor=Oracle Corporation

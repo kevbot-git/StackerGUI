@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +61,7 @@ public class Database {
 		    temp.add(new Score(name, level, time));
 		}
 		state.close();
+                Collections.sort(temp, Collections.reverseOrder());
 		return temp;
 	    } catch (SQLException ex) {
 		Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);

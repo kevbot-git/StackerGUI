@@ -30,8 +30,6 @@ public class ArcadeButton extends JButton {
 	    super.setContentAreaFilled(false);
 	    super.setIcon(new ImageIcon(offImage));
 	    super.setPressedIcon(new ImageIcon(onImage));
-            
-            super.setFocusable(false);
 	    
 	} catch (IOException e) {
 	    System.err.println("image not found");
